@@ -8,33 +8,32 @@ formRef.addEventListener('submit', formSubmit);
 formRef.addEventListener('input', throttle(textAreaInput, 500));
 populateForm();
 
-function textAreaInput(evt) {
-    items[evt.target.name] = evt.target.value;
+function textAreaInput(event) {
+    items[event.target.name] = event.target.value;
     localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
     }
 
-function formSubmit(evt) {
-    evt.preventDefault();
+function formSubmit(event) {
+    event.preventDefault();
     if (formRef.email.value === '' || formRef.message.value === '') {
-        alert('All fields must be filled');
-        } else { 
+        alert('All fields are required!');
+        } else {
         console.log(items);
-        evt.currentTarget.reset();
+        event.currentTarget.reset();
         localStorage.removeItem(STORAGE_KEY);
         items = {};
     }
 }
 
 function populateForm() {
-    const savedText = JSON.parse(localStorage.getItem(STORAGE_KEY))
+    const savedInfo = JSON.parse(localStorage.getItem(STORAGE_KEY))
    
-    for (const key in savedText) {
+    for (const key in savedInfo) {
         if (key) {
-            formRef[key].value = savedText[key];
-            items = savedText;
+            formRef[key].value = savedInfo[key];
+            items = savedInfo;
         } 
     }
 }
-
 
 
